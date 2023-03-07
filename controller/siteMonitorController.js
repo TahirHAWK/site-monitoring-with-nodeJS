@@ -17,6 +17,8 @@ exports.addNewSite = function(req, res){
        .then((onSuccess)=>{
         // 1. put the scraped webpage on mongodb
         fileMod.insertNewWebPageAndCompare(pageLink, scrapedWebPage)
+       }).then((something)=>{
+        res.send('the whole function ran successfully.')
        }) 
      
    })
