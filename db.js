@@ -1,20 +1,14 @@
 const mongodb = require('mongodb')
+const dotenv = require('dotenv')
+dotenv.config()
 
-let connectionString = 'mongodb://localhost:27017/siteMonitor?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+let connectionString = process.env.CONNECTIONSTRING
 // for offline  
         
 // always commit your changes to github after activating the online string and turning off the offline.
 
 
-//  mongodb+srv://appdev:appdev@appdev.6ppvo.mongodb.net/tahirhawk?retryWrites=true&w=majority
-// let connectionString = 'mongodb+srv://appdev:appdev@appdev.6ppvo.mongodb.net/tahirhawk?retryWrites=true&w=majority'
-// for online
-
-
 let port = process.env.PORT
-if(port == null || port == ""){
-  port = 3900
-}
 
 mongodb.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client){ 
   if(err){
