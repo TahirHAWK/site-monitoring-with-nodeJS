@@ -1,4 +1,8 @@
 const axios = require('axios')
+let fs = require('fs')
+let logger = fs.createWriteStream('log.txt', {
+  flags: 'a' // 'a' means appending (old data will be preserved)
+})
 const FileModifier = require('../model/fileModifier')
 
 // headers are used so that the code doesn't show any errors, I don't know what it does but it won't work without it
@@ -7,9 +11,9 @@ exports.addNewSite = function(req, res){
     let pageLink = 'https://hstu.ac.bd/page/all_notice/type/f/id/2'
     axios.get( pageLink , { 
         headers: { "Accept-Encoding": "gzip,deflate,compress" } 
-    })
+    }).then((result)=> {
     // appending the html to a new file
-    .then((result)=> {
+    console.log(result.data, 'its here on the add new site controller....')
        let scrapedWebPage = result.data
        let fileMod = new FileModifier(scrapedWebPage)
        fileMod.fileAppender(scrapedWebPage, 'hstu_notice.html')
@@ -23,6 +27,7 @@ exports.addNewSite = function(req, res){
      
    })
    .catch((err)=>{
-    console.log(err, '<<-- cannot load the site')
+    logger.write(err) 
+
    })
 }
